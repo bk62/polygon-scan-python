@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "polygon-scan-python"
+version = "0.1.0"
+description = "Polygon Scan API Wrapper"
+authors = ["bk62 <bkafle862@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/bk62/polygon-scan-python"
+repository = "https://github.com/bk62/polygon-scan-python"
+keywords = ["polygon", "polygon-scan", "api", "blockchain-explorer"]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Software Development",
+]
+include = [
+    "LICENSE"
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
