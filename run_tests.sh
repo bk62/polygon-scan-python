@@ -8,4 +8,4 @@ else
     echo "$FILE does not exist."
 fi
 
-pytest
+pytest "$@"
