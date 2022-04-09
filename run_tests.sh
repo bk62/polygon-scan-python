@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+SLOW_DOWN_API_TESTS=1
 FILE=.env
 if [ -f "$FILE" ]; then
     echo "$FILE exists. Reading..."

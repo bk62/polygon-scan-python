@@ -1,6 +1,12 @@
-import pytest
+from time import sleep
+import pytest, os
 from polygon_scan import PolygonScan
 from tests import api_key
+
+
+@pytest.fixture(autouse=os.environ.get("SLOW_DOWN_API_TESTS"))
+def slow_down_api_tests():
+    sleep(2)
 
 
 @pytest.fixture
@@ -55,3 +61,42 @@ def test_get_multi_accounts_balances(
     assert set(resp["result"][0].keys()).issubset(account_balance_keys)
     assert resp["result"][0]["account"] == test_addresses[0]
     assert str.isnumeric(resp["result"][0]["balance"])
+
+
+@pytest.fixture
+def account_normal_transaction_keys():
+    return [
+        "blockNumber",
+        "blockHash",
+        "timeStamp",
+        "hash",
+        "nonce",
+        "transactionIndex",
+        "from",
+        "to",
+        "value",
+        "gas",
+        "gasPrice",
+        "input",
+        "contractAddress",
+        "cumulativeGasUsed",
+        "txreceipt_status",
+        "gasUsed",
+        "confirmations",
+        "isError",
+    ]
+
+
+def test_get_account_normal_txns(
+    betamax_session, test_address, response_keys, account_normal_transaction_keys
+):
+    pg_scan = PolygonScan(api_key, session=betamax_session)
+    resp = pg_scan.account.get_account_normal_transactions(test_address)
+
+    assert isinstance(resp, dict)
+    assert set(response_keys).issubset(resp.keys())
+    assert resp["status"] == "1"
+    assert resp["message"] == "OK"
+    assert isinstance(resp["result"], list)
+    assert isinstance(resp["result"][0], dict)
+    assert set(resp["result"][0].keys()).issubset(account_normal_transaction_keys)
