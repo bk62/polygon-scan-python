@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(frozen=True, eq=True)
 class RateLimit:
     """`limit` calls per `limit_time_interval` seconds"""
 

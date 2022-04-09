@@ -13,7 +13,7 @@ def test_polygon_scan_no_api_tier_arg_sets_unauthenticated_api_tier():
 
 def test_polygon_scan_setting_rate_limit_sets_custom_api_tier():
     r = RateLimit(14, 5)
-    pg_scan = PolygonScan(rate_limit=r)
+    pg_scan = PolygonScan(api_tier=r)
 
     assert pg_scan.rate_limit == r
     assert pg_scan._api_tier == "custom"

@@ -75,13 +75,15 @@ class PolygonScan:
         if api_tier not in RATE_LIMITS.keys():
             if isinstance(api_tier, RateLimit):
                 self._api_tier = "custom"
-                self._api_tier = api_tier
+                self._rate_limit = api_tier
             else:
                 self._api_tier = "none"
+                self._rate_limit = RATE_LIMITS[api_tier]
                 logger.warn(
                     f"Invalid API tier {api_tier}. Set to unauthenticated tier with rate limit {RATE_LIMITS['none']}"
                 )
-        self._rate_limit = RATE_LIMITS[api_tier]
+        else:
+            self._rate_limit = RATE_LIMITS[api_tier]
         self._network = network or "mainnet"
         if network == "mainnet":
             self._endpoint_url = ENDPOINT_URLS[network]
