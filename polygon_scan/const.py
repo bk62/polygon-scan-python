@@ -10,7 +10,7 @@ TIMEOUT = float(os.environ.get("polygon_scan_timeout", 16))
 
 
 RATE_LIMITS = {
-    "none": RateLimit(1, 5),
+    "none": RateLimit(2, 5),
     "free": RateLimit(10, 1),
     "standard": RateLimit(20, 1),
     "pro": RateLimit(30, 1),

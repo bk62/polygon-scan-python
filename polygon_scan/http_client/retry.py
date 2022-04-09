@@ -1,3 +1,5 @@
+"""Simple retry strategy implementations."""
+
 import logging, time
 
 logger = logging.getLogger(__package__)

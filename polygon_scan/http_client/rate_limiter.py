@@ -1,3 +1,5 @@
+"""Simple Rate Limit Enforcer."""
+
 import logging
 from sqlite3 import Timestamp
 import time

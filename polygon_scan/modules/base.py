@@ -1,4 +1,6 @@
 class Base:
+    """Base helper class for Polygon Scan's API Modules e.g. Account, Block etc."""
+
     params = {}
 
     def __init__(self, polygon_scan):

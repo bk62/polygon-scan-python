@@ -1,3 +1,5 @@
+"""HTTP API Client implementation WIP."""
+
 import logging
 
 import requests
@@ -64,6 +66,8 @@ SUCCESS_STATUSES = {codes["accepted"], codes["created"], codes["ok"]}
 
 
 class Client:
+    """HTTP API Client class"""
+
     @staticmethod
     def _log_request(url, kwargs):
         logger.debug(f"Requesting: {url}")
@@ -78,6 +82,7 @@ class Client:
         session=None,
         **session_kwargs,
     ):
+        # TODO option to disable rate limiting
         self._rate_limiter = rate_limiter or SimpleRateLimiter(rate_limit)
         self._retry_strategy = retry_strategy or FiniteRetryStrategy()
         self._timeout = timeout

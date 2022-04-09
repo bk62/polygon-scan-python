@@ -2,6 +2,8 @@ from .base import Base
 
 
 class Account(Base):
+    """Helper class containing all account module methods."""
+
     params = {"module": "account"}
 
     def get_account_balance(self, address):
