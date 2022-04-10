@@ -107,7 +107,7 @@ Install poetry as in (https://python-poetry.org/docs/)[https://python-poetry.org
 4. (Optional) Enter your API KEY in an `.env` file
    ```sh
    touch .env
-   echo "POLYGON_SCAN_API_KEY = <YOUR_API_KEY> > .env";
+   echo "export POLYGON_SCAN_API_KEY=<YOUR_API_KEY> > .env";
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
