@@ -161,6 +161,12 @@ See the [open issues](https://github.com/bk62/polygon-scan-python/issues) for a 
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+This projet uses Betamax to mock requests by recording actual HTTP responses. The first time you add test an API call method:
+
+1. Export `POLYGON_SCAN_API_KEY` from a `.env` file (refer to `.env.example`)
+2. Run the `run_tests.sh` script which instructs Betamax to record response fixtures using the API key. The script also sets a 2 sec delay between requests to safely respect rate limits.
+3. Delete the relevant fixture file `tests/fixtures/cassettes/test.<test_module_name>.<test_name>` if necessary.
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- LICENSE -->
