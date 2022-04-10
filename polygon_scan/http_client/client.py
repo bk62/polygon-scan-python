@@ -24,7 +24,6 @@ from .exceptions import (
     TooManyRequests,
     URITooLong,
     UnavailableForLegalReasons,
-    InvalidRequest,
 )
 
 logger = logging.getLogger(__package__)

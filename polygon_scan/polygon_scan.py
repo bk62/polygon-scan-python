@@ -1,13 +1,11 @@
 """Module containing the main PolygonScan class."""
 import logging, os
-import requests
 from .http_client import Client, RateLimit
 from .http_client.exceptions import InvalidRequest
 from .modules import Account
 from .exceptions import APIException, ClientException
 from .datatypes import AttrDict
 from .const import TIMEOUT, RATE_LIMITS, __version__, ENDPOINT_URLS
-from polygon_scan import http_client
 
 
 ENV_API_KEY = os.environ.get("POLYGON_SCAN_API_KEY", None)
