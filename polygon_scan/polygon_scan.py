@@ -129,7 +129,10 @@ class PolygonScan:
         params = params or {}
         kwargs.update(params=params)
         # TODO parse_json=False or test is json here, b/c api returns html sometimes (? check)
+        # return and store request and response metadata for debugging
         response_dict = self._http_client.request(self._endpoint_url, **kwargs)
+        if response_dict["status"] == "0":
+            raise APIException(response_dict)
         response = APIResponse(
             response_dict, request_kwargs=kwargs, request_url=self._endpoint_url
         )

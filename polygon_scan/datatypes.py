@@ -26,18 +26,34 @@ class AttrDict:
 
 
 class APIResponse:
-    def __init__(self, response_dict, request_kwargs=None, request_url=None) -> None:
-        self.status = response_dict["status"]
-        self.message = response_dict["message"]
+    def __init__(
+        self,
+        response_dict=None,
+        status=None,
+        message=None,
+        result=None,
+        request_kwargs=None,
+        request_url=None,
+    ) -> None:
+        assert (response_dict is not None) or (
+            status is not None and message is not None and result is not None
+        ), "invalid arguments: one of response_dict or status, message, result is required"
 
         self.request_kwargs = request_kwargs or {}
         self.request_url = request_url or ""
 
-        self._set_result(response_dict["result"])
+        if response_dict:
+            status = response_dict["status"]
+            message = response_dict["message"]
+            result = response_dict["result"]
+
+        self.status = status
+        self.message = message
+        self._set_result(result)
 
     def _set_result(self, result):
         if type(result) == dict:
-            self._result = AttrDict(result)
+            self._result = [AttrDict(result)]
         elif type(result) == list:
             self._result = [AttrDict(r) for r in result]
         elif type(result) == str:
@@ -54,3 +70,9 @@ class APIResponse:
 
     def __getitem__(self, ix):
         return self._result[ix]
+
+    def __repr__(self):
+        return (
+            self.__class__.__name__
+            + f"(status={self.status}, message={self.message}, result={self.result!r}, request_url={self.request_url}, request_kwargs={self.request_kwargs!r})"
+        )

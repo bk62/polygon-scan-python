@@ -3,6 +3,7 @@ import pytest, os
 from polygon_scan import PolygonScan
 from polygon_scan.datatypes import APIResponse, AttrDict
 from polygon_scan.utils import is_seq
+from polygon_scan.exceptions import APIException
 from tests import api_key
 
 
@@ -63,6 +64,31 @@ def test_get_multi_accounts_balances(
     assert set(resp.result[0].keys()).issubset(account_balance_keys)
     assert resp.result[0]["account"] == test_addresses[0]
     assert str.isnumeric(resp.result[0]["balance"])
+
+
+# TODO
+# fails currently -- requires PRO?
+# add another test that succeeds
+def test_get_historical_account_balance_by_blockno__raises_api_exc(
+    betamax_session, response_keys
+):
+    """Test get account balance API call"""
+    test_address = "0x23eA5Ec7Ea2d4282012313c9899Cdc07bd45243d"
+    blockno = 18798641
+
+    pg_scan = PolygonScan(api_key, session=betamax_session)
+
+    with pytest.raises(APIException):
+        resp = pg_scan.account.get_account_balance_history_by_block_no(
+            test_address, blockno
+        )
+
+    # sucess:
+    # assert isinstance(resp, APIResponse)
+    # assert resp.status == "1"
+    # assert resp.message == "OK"
+    # assert is_seq(resp.result)
+    # assert str.isnumeric(resp.result[0])
 
 
 @pytest.fixture

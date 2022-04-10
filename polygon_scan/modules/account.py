@@ -19,6 +19,7 @@ class Account(Base):
         # TODO
         # specific rate limit for this endpint 2/sec
         # only 20 addrs max
+        # pro tier only
         addresses = self.prep_addresses_arg(addresses)
         params = self.get_params(
             action="balancehistory", address=addresses, blockno=blockno
