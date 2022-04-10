@@ -92,7 +92,7 @@ def test_get_historical_account_balance_by_blockno__raises_api_exc(
 
 
 @pytest.fixture
-def account_normal_transaction_keys():
+def transaction_common_keys():
     return [
         "blockNumber",
         "blockHash",
@@ -102,22 +102,30 @@ def account_normal_transaction_keys():
         "transactionIndex",
         "from",
         "to",
-        "value",
         "gas",
         "gasPrice",
         "input",
         "contractAddress",
         "cumulativeGasUsed",
-        "txreceipt_status",
         "gasUsed",
         "confirmations",
+    ]
+
+
+@pytest.fixture
+def account_normal_transaction_keys(transaction_common_keys):
+    return transaction_common_keys + [
+        "value",
+        "txreceipt_status",
         "isError",
     ]
 
 
 def test_get_account_normal_txns(
-    betamax_session, test_address, response_keys, account_normal_transaction_keys
+    betamax_session, test_address, account_normal_transaction_keys
 ):
+    test_address = "0xb91dd8225Db88dE4E3CD7B7eC538677A2c1Be8Cb"
+
     pg_scan = PolygonScan(api_key, session=betamax_session)
     resp = pg_scan.account.get_account_normal_transactions(test_address)
 
@@ -128,3 +136,152 @@ def test_get_account_normal_txns(
     assert isinstance(resp.result, list)
     assert isinstance(resp.result[0], AttrDict)
     assert set(resp.result[0].keys()).issubset(account_normal_transaction_keys)
+
+
+@pytest.fixture
+def internal_transactions_keys():
+    return [
+        "blockNumber",
+        "timeStamp",
+        "hash",
+        "from",
+        "to",
+        "value",
+        "contractAddress",
+        "input",
+        "type",
+        "gas",
+        "gasUsed",
+        "traceId",
+        "isError",
+        "errCode",
+    ]
+
+
+def test_get_account_internal_transactions(betamax_session, internal_transactions_keys):
+    test_address = "0x0f4240D9bD4D3CFCE7aDE7F26415780824958Bc3"
+
+    pg_scan = PolygonScan(api_key, session=betamax_session)
+    resp = pg_scan.account.get_account_internal_transactions(test_address)
+
+    assert isinstance(resp, APIResponse)
+    assert resp.status == "1"
+    assert resp.message == "OK"
+    assert resp.result is not None
+    assert isinstance(resp.result, list)
+    assert isinstance(resp.result[0], AttrDict)
+    assert set(resp.result[0].keys()).issubset(internal_transactions_keys)
+
+
+def test_get_internal_transactions_by_transaction_hash(
+    betamax_session, internal_transactions_keys
+):
+    txn_hash = "0x23a07d4f622ba88c8338763d7811437953a0e8fab123b4346486936646f8578d"
+
+    pg_scan = PolygonScan(api_key, session=betamax_session)
+    resp = pg_scan.account.get_internal_transactions_by_transaction_hash(txn_hash)
+
+    assert isinstance(resp, APIResponse)
+    assert resp.status == "1"
+    assert resp.message == "OK"
+    assert resp.result is not None
+    assert isinstance(resp.result, list)
+    assert isinstance(resp.result[0], AttrDict)
+    assert set(resp.result[0].keys()).issubset(internal_transactions_keys)
+
+
+def test_get_internal_transactions_by_block_range(
+    betamax_session, internal_transactions_keys
+):
+    pg_scan = PolygonScan(api_key, session=betamax_session)
+    resp = pg_scan.account.get_internal_transactions_by_block_range(
+        startblock=19568000, endblock=19569000
+    )
+
+    assert isinstance(resp, APIResponse)
+    assert resp.status == "1"
+    assert resp.message == "OK"
+    assert resp.result is not None
+    assert isinstance(resp.result, list)
+    assert isinstance(resp.result[0], AttrDict)
+    assert set(resp.result[0].keys()).issubset(internal_transactions_keys)
+
+
+@pytest.fixture
+def erc20_token_transfer_keys(transaction_common_keys):
+    return transaction_common_keys + [
+        "value",
+        "tokenName",
+        "tokenSymbol",
+        "tokenDecimal",
+    ]
+
+
+def test_get_erc20_token_transfer_events_by_address(
+    betamax_session, erc20_token_transfer_keys
+):
+    test_address = "0x6813ad11cca98e15ff181a257a3c2855d1eee69e"
+    contract_address = "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"
+
+    pg_scan = PolygonScan(api_key, session=betamax_session)
+    resp = pg_scan.account.get_erc_20_token_transfer_events_by_address(
+        test_address, contractaddress=contract_address
+    )
+
+    assert isinstance(resp, APIResponse)
+    assert resp.status == "1"
+    assert resp.message == "OK"
+    assert resp.result is not None
+    assert isinstance(resp.result, list)
+    assert isinstance(resp.result[0], AttrDict)
+    assert set(resp.result[0].keys()).issubset(erc20_token_transfer_keys)
+
+
+@pytest.fixture
+def erc721_token_transfer_keys(transaction_common_keys):
+    return transaction_common_keys + [
+        "tokenID",
+        "tokenName",
+        "tokenSymbol",
+        "tokenDecimal",
+    ]
+
+
+def test_get_erc721_token_transfer_events_by_address(
+    betamax_session, erc721_token_transfer_keys
+):
+    test_address = "0x30b32e79ed9c4012a71f4235f77dcf90a6f6800f"
+    contract_address = "0x7227e371540cf7b8e512544ba6871472031f3335"
+
+    pg_scan = PolygonScan(api_key, session=betamax_session)
+    resp = pg_scan.account.get_erc_721_token_transfer_events_by_address(
+        test_address, contractaddress=contract_address
+    )
+
+    assert isinstance(resp, APIResponse)
+    assert resp.status == "1"
+    assert resp.message == "OK"
+    assert resp.result is not None
+    assert isinstance(resp.result, list)
+    assert isinstance(resp.result[0], AttrDict)
+    assert set(resp.result[0].keys()).issubset(erc721_token_transfer_keys)
+
+
+@pytest.fixture
+def block_keys():
+    return ["blockNumber", "timeStamp", "blockReward"]
+
+
+def test_get_blocks_validated_by_address(betamax_session, block_keys):
+    test_address = "0xb79fad4ca981472442f53d16365fdf0305ffd8e9"
+
+    pg_scan = PolygonScan(api_key, session=betamax_session)
+    resp = pg_scan.account.get_blocks_validated_by_address(test_address)
+
+    assert isinstance(resp, APIResponse)
+    assert resp.status == "1"
+    assert resp.message == "OK"
+    assert resp.result is not None
+    assert isinstance(resp.result, list)
+    assert isinstance(resp.result[0], AttrDict)
+    assert set(resp.result[0].keys()).issubset(block_keys)

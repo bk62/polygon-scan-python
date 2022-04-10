@@ -2,7 +2,7 @@ import base64, os
 from betamax import Betamax
 from betamax.decorator import use_cassette
 
-api_key = os.environ.get("POLYGON_SCAN_API_KEY", "placeholder_test_api_key")
+api_key = os.getenv("POLYGON_SCAN_API_KEY", "placeholder_test_api_key")
 
 with Betamax.configure() as config:
     config.cassette_library_dir = "tests/fixtures/cassettes"

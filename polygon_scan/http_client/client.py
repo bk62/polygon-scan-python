@@ -9,6 +9,7 @@ from requests.status_codes import codes
 from .retry import FiniteRetryStrategy
 from .const import TIMEOUT
 from .rate_limiter import SimpleRateLimiter
+from .datatypes import ClientResponse
 from .exceptions import (
     InvalidJSON,
     InvalidRequest,
@@ -121,13 +122,13 @@ class Client:
         if response.headers.get("content-length") == "0":
             return {}
 
+        client_response = ClientResponse(response)
         if parse_json:
             try:
-                return response.json()
+                client_response.response_dict = response.json()
             except ValueError:
                 raise InvalidJSON(response)
-        else:
-            return {"text": response.text, "response": response}
+        return client_response
 
     def _retry_request(self, url, response, exception, **kwargs):
         if exception:

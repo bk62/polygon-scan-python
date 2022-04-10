@@ -26,21 +26,9 @@ class AttrDict:
 
 
 class APIResponse:
-    def __init__(
-        self,
-        response_dict=None,
-        status=None,
-        message=None,
-        result=None,
-        request_kwargs=None,
-        request_url=None,
-    ) -> None:
-        assert (response_dict is not None) or (
-            status is not None and message is not None and result is not None
-        ), "invalid arguments: one of response_dict or status, message, result is required"
-
-        self.request_kwargs = request_kwargs or {}
-        self.request_url = request_url or ""
+    def __init__(self, response) -> None:
+        self.response = response
+        response_dict = response.response_dict
 
         if response_dict:
             status = response_dict["status"]

@@ -83,8 +83,8 @@ class PolygonScan:
         else:
             self._rate_limit = RATE_LIMITS[api_tier]
         self._network = network or "mainnet"
-        if network == "mainnet":
-            self._endpoint_url = ENDPOINT_URLS[network]
+        if self._network == "mainnet":
+            self._endpoint_url = ENDPOINT_URLS["mainnet"]
         else:
             self._endpoint_url = ENDPOINT_URLS["mumbai"]
         self._tag = tag
@@ -122,7 +122,7 @@ class PolygonScan:
         return self._http_client
 
     def _get_params(self):
-        return {"api_key": self._api_key, "tag": self._tag}
+        return {"apikey": self._api_key, "tag": self._tag}
 
     def request(self, params=None, **kwargs) -> APIResponse:
         """Request the API endpoint url using `params` and return the parsed JSON."""
@@ -130,10 +130,8 @@ class PolygonScan:
         kwargs.update(params=params)
         # TODO parse_json=False or test is json here, b/c api returns html sometimes (? check)
         # return and store request and response metadata for debugging
-        response_dict = self._http_client.request(self._endpoint_url, **kwargs)
-        if response_dict["status"] == "0":
-            raise APIException(response_dict)
-        response = APIResponse(
-            response_dict, request_kwargs=kwargs, request_url=self._endpoint_url
-        )
+        response = self._http_client.request(self._endpoint_url, **kwargs)
+        if response.response_dict["status"] == "0":
+            raise APIException(response)
+        response = APIResponse(response)
         return response

@@ -30,7 +30,7 @@ def test_polygon_scan_setting_mumbai_or_testnet_works():
 def test_polygon_scan_params_set_in_http_client_session_params():
     pg_scan = PolygonScan(api_key="<API_KEY>", tag="<TAG")
 
-    assert pg_scan.http_client.session.params["api_key"] == "<API_KEY>"
+    assert pg_scan.http_client.session.params["apikey"] == "<API_KEY>"
 
 
 def test_polygon_scan_http_client_kwargs(mocker):

@@ -7,10 +7,10 @@ class BaseException(Exception):
 class APIException(BaseException):
     """Exceptions involving error messages from PolygonScan API"""
 
-    def __init__(self, response_dict):
-        self.response_dict = response_dict
+    def __init__(self, response):
+        self.response = response
         super().__init__(
-            f'API Error: ({response_dict["status"]} {response_dict["message"]}) {response_dict["result"]}'
+            f'API Error: ({response.response.url}) {response.response_dict["result"]}'
         )
 
 
