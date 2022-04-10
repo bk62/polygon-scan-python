@@ -62,5 +62,5 @@ class APIResponse:
     def __repr__(self):
         return (
             self.__class__.__name__
-            + f"(status={self.status}, message={self.message}, result={self.result!r}, request_url={self.request_url}, request_kwargs={self.request_kwargs!r})"
+            + f"(response={self.response}, result={self.result!r})"
         )
