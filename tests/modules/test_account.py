@@ -1,6 +1,8 @@
 from time import sleep
 import pytest, os
 from polygon_scan import PolygonScan
+from polygon_scan.datatypes import APIResponse, AttrDict
+from polygon_scan.utils import is_seq
 from tests import api_key
 
 
@@ -24,11 +26,11 @@ def test_get_account_balance(betamax_session, test_address, response_keys):
     pg_scan = PolygonScan(api_key, session=betamax_session)
     resp = pg_scan.account.get_account_balance(test_address)
 
-    assert isinstance(resp, dict)
-    assert set(response_keys).issubset(resp.keys())
-    assert resp["status"] == "1"
-    assert resp["message"] == "OK"
-    assert str.isnumeric(resp["result"])
+    assert isinstance(resp, APIResponse)
+    assert resp.status == "1"
+    assert resp.message == "OK"
+    assert is_seq(resp.result)
+    assert str.isnumeric(resp.result[0])
 
 
 @pytest.fixture
@@ -52,15 +54,15 @@ def test_get_multi_accounts_balances(
     pg_scan = PolygonScan(api_key, session=betamax_session)
     resp = pg_scan.account.get_multiple_accounts_balances(test_addresses)
 
-    assert isinstance(resp, dict)
-    assert set(response_keys).issubset(resp.keys())
-    assert resp["status"] == "1"
-    assert resp["message"] == "OK"
-    assert isinstance(resp["result"], list)
-    assert isinstance(resp["result"][0], dict)
-    assert set(resp["result"][0].keys()).issubset(account_balance_keys)
-    assert resp["result"][0]["account"] == test_addresses[0]
-    assert str.isnumeric(resp["result"][0]["balance"])
+    assert isinstance(resp, APIResponse)
+    assert resp.status == "1"
+    assert resp.message == "OK"
+    assert resp.result is not None
+    assert isinstance(resp.result, list)
+    assert isinstance(resp.result[0], AttrDict)
+    assert set(resp.result[0].keys()).issubset(account_balance_keys)
+    assert resp.result[0]["account"] == test_addresses[0]
+    assert str.isnumeric(resp.result[0]["balance"])
 
 
 @pytest.fixture
@@ -93,10 +95,10 @@ def test_get_account_normal_txns(
     pg_scan = PolygonScan(api_key, session=betamax_session)
     resp = pg_scan.account.get_account_normal_transactions(test_address)
 
-    assert isinstance(resp, dict)
-    assert set(response_keys).issubset(resp.keys())
-    assert resp["status"] == "1"
-    assert resp["message"] == "OK"
-    assert isinstance(resp["result"], list)
-    assert isinstance(resp["result"][0], dict)
-    assert set(resp["result"][0].keys()).issubset(account_normal_transaction_keys)
+    assert isinstance(resp, APIResponse)
+    assert resp.status == "1"
+    assert resp.message == "OK"
+    assert resp.result is not None
+    assert isinstance(resp.result, list)
+    assert isinstance(resp.result[0], AttrDict)
+    assert set(resp.result[0].keys()).issubset(account_normal_transaction_keys)

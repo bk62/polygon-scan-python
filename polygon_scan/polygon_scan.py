@@ -4,7 +4,7 @@ from .http_client import Client, RateLimit
 from .http_client.exceptions import InvalidRequest
 from .modules import Account
 from .exceptions import APIException, ClientException
-from .datatypes import AttrDict
+from .datatypes import AttrDict, APIResponse
 from .const import TIMEOUT, RATE_LIMITS, __version__, ENDPOINT_URLS
 
 
@@ -124,9 +124,13 @@ class PolygonScan:
     def _get_params(self):
         return {"api_key": self._api_key, "tag": self._tag}
 
-    def request(self, params=None, **kwargs):
+    def request(self, params=None, **kwargs) -> APIResponse:
         """Request the API endpoint url using `params` and return the parsed JSON."""
         params = params or {}
         kwargs.update(params=params)
         # TODO parse_json=False or test is json here, b/c api returns html sometimes (? check)
-        return self._http_client.request(self._endpoint_url, **kwargs)
+        response_dict = self._http_client.request(self._endpoint_url, **kwargs)
+        response = APIResponse(
+            response_dict, request_kwargs=kwargs, request_url=self._endpoint_url
+        )
+        return response
