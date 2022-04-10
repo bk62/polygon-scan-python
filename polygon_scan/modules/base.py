@@ -1,3 +1,6 @@
+from polygon_scan.utils import is_seq
+
+
 class Base:
     """Base helper class for Polygon Scan's API Modules e.g. Account, Block etc."""
 
@@ -12,3 +15,13 @@ class Base:
 
     def request(self, params, **kwargs):
         return self._polygon_scan.request(params=params, **kwargs)
+
+    def prep_addresses_arg(self, addresses):
+        if type(addresses) == str:
+            # single addr or addrs sep by ,
+            return addresses
+        else:
+            # is sequence
+            assert is_seq(addresses), "addresses must be a string or a sequence"
+            addresses = ",".join(addresses)
+        return addresses

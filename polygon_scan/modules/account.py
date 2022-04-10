@@ -11,15 +11,19 @@ class Account(Base):
         return self.request(params)
 
     def get_multiple_accounts_balances(self, addresses):
-        if type(addresses) != str:
-            addresses = ",".join(addresses)
+        addresses = self.prep_addresses_arg(addresses)
         params = self.get_params(action="balancemulti", address=addresses)
         return self.request(params)
 
-    def get_account_balance_history(self):
+    def get_account_balance_history_by_block_no(self, addresses, blockno):
         # TODO
         # specific rate limit for this endpint 2/sec
-        pass
+        # only 20 addrs max
+        addresses = self.prep_addresses_arg(addresses)
+        params = self.get_params(
+            action="balancehistory", address=addresses, blockno=blockno
+        )
+        return self.request(params)
 
     def get_account_normal_transactions(
         self, address, start_block=0, end_block=None, page=1, offset=0, sort="asc"
