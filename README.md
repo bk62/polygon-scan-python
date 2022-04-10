@@ -96,19 +96,19 @@ Install poetry as in [https://python-poetry.org/docs/](https://python-poetry.org
 ### Installation
 
 1. Clone the repo
-   ```sh
-   git clone https://github.com/bk62/polygon-scan-python.git
-   ```
+```sh
+git clone https://github.com/bk62/polygon-scan-python.git
+```
 2. Install required python packages with poetry
-   ```sh
-    cd polygon-scan-python
-    poetry install
-   ```
+```sh
+cd polygon-scan-python
+poetry install
+```
 3. (Optional) Get a free API Key at [https://polygonscan.com](https://polygonscan.com)
 4. (Optional) Enter your API KEY in an `.env` file
-   ```sh
-   echo "export POLYGON_SCAN_API_KEY=<YOUR_API_KEY>" > .env;
-   ```
+```sh
+echo "export POLYGON_SCAN_API_KEY=<YOUR_API_KEY>" > .env;
+```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -117,18 +117,18 @@ Install poetry as in [https://python-poetry.org/docs/](https://python-poetry.org
 ## Usage
 
 ```python
-  from polygon_scan import PolygonScan
+from polygon_scan import PolygonScan
 
-  address = "0x157B46dF4457ee4aca3137950a2E412EF368C58B"
+address = "0x157B46dF4457ee4aca3137950a2E412EF368C58B"
 
-  pg_scan = PolygonScan()
+pg_scan = PolygonScan()
 
-  balance = pg_scan.account.get_account_balance(address)
-  print(f"{address} balance: {balance}")
+balance = pg_scan.account.get_account_balance(address)
+print(f"{address} balance: {balance}")
 
-  txns = pg_scan.account.get_account_normal_transactions(address)
-  for txn in txns[:5]:
-    print(txn)
+txns = pg_scan.account.get_account_normal_transactions(address)
+for txn in txns[:5]:
+  print(txn)
 ```
 
 <!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
