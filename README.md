@@ -101,12 +101,12 @@ Install poetry as in [https://python-poetry.org/docs/](https://python-poetry.org
    ```
 2. Install required python packages with poetry
    ```sh
+    cd polygon-scan-python
     poetry install
    ```
 3. (Optional) Get a free API Key at [https://polygonscan.com](https://polygonscan.com)
 4. (Optional) Enter your API KEY in an `.env` file
    ```sh
-   touch .env
    echo "export POLYGON_SCAN_API_KEY=<YOUR_API_KEY>" > .env;
    ```
 
