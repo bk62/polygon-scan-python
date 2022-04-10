@@ -91,7 +91,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-Install poetry as in (https://python-poetry.org/docs/)[https://python-poetry.org/docs/]
+Install poetry as in [https://python-poetry.org/docs/](https://python-poetry.org/docs/)
 
 ### Installation
 
@@ -140,7 +140,7 @@ Install poetry as in (https://python-poetry.org/docs/)[https://python-poetry.org
 ## Roadmap
 
 - [ ] Implement modules and methods for all API calls
-- [ ] Handle PolygonScan errors - (https://docs.polygonscan.com/support/common-error-messages)[https://docs.polygonscan.com/support/common-error-messages]
+- [ ] Handle PolygonScan errors - [https://docs.polygonscan.com/support/common-error-messages](https://docs.polygonscan.com/support/common-error-messages)
 - [ ] Http client tests
 - [ ] Documentation
   - [ ] Docstrings
