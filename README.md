@@ -201,7 +201,7 @@ HTTP client implementation significantly influenced by [prawcore](https://github
 [issues-shield]: https://img.shields.io/github/issues/bk62/polygon-scan-python.svg?style=for-the-badge
 [issues-url]: https://github.com/bk62/polygon-scan-python/issues
 [license-shield]: https://img.shields.io/github/license/bk62/polygon-scan-python.svg?style=for-the-badge
-[license-url]: https://github.com/bk62/polygon-scan-python/blob/master/LICENSE.txt
+[license-url]: https://github.com/bk62/polygon-scan-python/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: images/screenshot.png
