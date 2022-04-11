@@ -6,3 +6,4 @@ from .transaction import Transaction
 from .block import Block
 from .logs import Logs
 from .token import Token
+from .gastracker import GasTracker
