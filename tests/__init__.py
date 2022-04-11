@@ -1,8 +1,13 @@
-import base64, os
+import base64
+import os
+from time import sleep
+import pytest
+
 from betamax import Betamax
 from betamax.decorator import use_cassette
 
 api_key = os.getenv("POLYGON_SCAN_API_KEY", "placeholder_test_api_key")
+sleep_between_tests = os.environ.get("SLOW_DOWN_API_TESTS")
 
 with Betamax.configure() as config:
     config.cassette_library_dir = "tests/fixtures/cassettes"
@@ -10,3 +15,9 @@ with Betamax.configure() as config:
         "<B64-API-KEY>", base64.b64encode(api_key.encode("utf-8")).decode("utf-8")
     )
     config.define_cassette_placeholder("<API-KEY>", api_key)
+    config.default_cassette_options["record_mode"] = "new_episodes"
+
+
+@pytest.fixture(autouse=sleep_between_tests)
+def slow_down_api_tests():
+    sleep(2)

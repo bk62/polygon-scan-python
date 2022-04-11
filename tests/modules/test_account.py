@@ -1,15 +1,11 @@
-from time import sleep
-import pytest, os
+import pytest
 from polygon_scan import PolygonScan
 from polygon_scan.datatypes import APIResponse, AttrDict
 from polygon_scan.utils import is_seq
 from polygon_scan.exceptions import APIException
+
+# reliant on side effect of importing api key -- sleep bet/n tests fixture initialized in tests/__init__
 from tests import api_key
-
-
-@pytest.fixture(autouse=os.environ.get("SLOW_DOWN_API_TESTS"))
-def slow_down_api_tests():
-    sleep(2)
 
 
 @pytest.fixture
