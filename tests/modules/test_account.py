@@ -17,7 +17,7 @@ def response_keys():
     return ["status", "message", "result"]
 
 
-def test_get_account_balance(betamax_session, test_address, response_keys):
+def test_get_account_balance(betamax_session, test_address):
     """Test get account balance API call"""
     pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.account.get_account_balance(test_address)
