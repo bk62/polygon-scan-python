@@ -1,5 +1,6 @@
 """Module containing the main PolygonScan class."""
 import logging, os
+
 from .http_client import Client, RateLimit
 from .http_client.exceptions import InvalidRequest
 from .modules import (
@@ -11,6 +12,7 @@ from .modules import (
     Token,
     GasTracker,
     Stats,
+    GethProxy,
 )
 from .exceptions import APIException, ClientException
 from .datatypes import AttrDict, APIResponse
@@ -120,6 +122,7 @@ class PolygonScan:
         self.token = Token(self)
         self.gas_tracker = GasTracker(self)
         self.stats = Stats(self)
+        self.get_proxy = GethProxy(self)
 
     @property
     def network(self):

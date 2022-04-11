@@ -8,3 +8,4 @@ from .logs import Logs
 from .token import Token
 from .gastracker import GasTracker
 from .stats import Stats
+from .geth_proxy import GethProxy
