@@ -1,6 +1,8 @@
 import pytest
 from polygon_scan import PolygonScan
 from polygon_scan.datatypes import APIResponse, AttrDict
+from polygon_scan.exceptions import APIException
+
 
 from tests import APIKEY
 
@@ -37,8 +39,10 @@ def block_countdown_keys():
     return ["CurrentBlock", "CountdownBlock", "RemainingBlock", "EstimateTimeInSec"]
 
 
-def test_get_estimated_block_countdown(betamax_session, block_countdown_keys):
-    test_blockno = 24926850
+def test_get_estimated_block_countdown__future_block(
+    betamax_session, block_countdown_keys
+):
+    test_blockno = 999999999
 
     pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.block.get_estimated_block_countdown(test_blockno)
@@ -50,6 +54,15 @@ def test_get_estimated_block_countdown(betamax_session, block_countdown_keys):
     assert isinstance(resp.result, list)
     assert isinstance(resp.result[0], AttrDict)
     assert set(resp.result[0].keys()).issubset(block_countdown_keys)
+
+
+def test_get_estimated_block_countdown__passed_block_raises_api_exc(betamax_session):
+    test_blockno = 24926850
+
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
+
+    with pytest.raises(APIException):
+        resp = pg_scan.block.get_estimated_block_countdown(test_blockno)
 
 
 def test_get_block_number_by_timestamp(betamax_session):
