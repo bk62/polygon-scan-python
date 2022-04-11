@@ -4,3 +4,4 @@ from .account import Account
 from .contract import Contract
 from .transaction import Transaction
 from .block import Block
+from .logs import Logs
