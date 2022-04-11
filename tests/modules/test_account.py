@@ -4,8 +4,7 @@ from polygon_scan.datatypes import APIResponse, AttrDict
 from polygon_scan.utils import is_seq
 from polygon_scan.exceptions import APIException
 
-# reliant on side effect of importing api key -- sleep bet/n tests fixture initialized in tests/__init__
-from tests import api_key
+from tests import APIKEY
 
 
 @pytest.fixture
@@ -20,7 +19,7 @@ def response_keys():
 
 def test_get_account_balance(betamax_session, test_address, response_keys):
     """Test get account balance API call"""
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.account.get_account_balance(test_address)
 
     assert isinstance(resp, APIResponse)
@@ -48,7 +47,7 @@ def test_get_multi_accounts_balances(
     betamax_session, test_addresses, response_keys, account_balance_keys
 ):
 
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.account.get_multiple_accounts_balances(test_addresses)
 
     assert isinstance(resp, APIResponse)
@@ -72,7 +71,7 @@ def test_get_historical_account_balance_by_blockno__raises_api_exc(
     test_address = "0x23eA5Ec7Ea2d4282012313c9899Cdc07bd45243d"
     blockno = 18798641
 
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
 
     with pytest.raises(APIException):
         resp = pg_scan.account.get_account_balance_history_by_block_no(
@@ -122,7 +121,7 @@ def test_get_account_normal_txns(
 ):
     test_address = "0xb91dd8225Db88dE4E3CD7B7eC538677A2c1Be8Cb"
 
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.account.get_account_normal_transactions(test_address)
 
     assert isinstance(resp, APIResponse)
@@ -157,7 +156,7 @@ def internal_transactions_keys():
 def test_get_account_internal_transactions(betamax_session, internal_transactions_keys):
     test_address = "0x0f4240D9bD4D3CFCE7aDE7F26415780824958Bc3"
 
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.account.get_account_internal_transactions(test_address)
 
     assert isinstance(resp, APIResponse)
@@ -174,7 +173,7 @@ def test_get_internal_transactions_by_transaction_hash(
 ):
     txn_hash = "0x23a07d4f622ba88c8338763d7811437953a0e8fab123b4346486936646f8578d"
 
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.account.get_internal_transactions_by_transaction_hash(txn_hash)
 
     assert isinstance(resp, APIResponse)
@@ -189,7 +188,7 @@ def test_get_internal_transactions_by_transaction_hash(
 def test_get_internal_transactions_by_block_range(
     betamax_session, internal_transactions_keys
 ):
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.account.get_internal_transactions_by_block_range(
         startblock=19568000, endblock=19569000
     )
@@ -219,7 +218,7 @@ def test_get_erc20_token_transfer_events_by_address(
     test_address = "0x6813ad11cca98e15ff181a257a3c2855d1eee69e"
     contract_address = "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"
 
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.account.get_erc_20_token_transfer_events_by_address(
         test_address, contractaddress=contract_address
     )
@@ -249,7 +248,7 @@ def test_get_erc721_token_transfer_events_by_address(
     test_address = "0x30b32e79ed9c4012a71f4235f77dcf90a6f6800f"
     contract_address = "0x7227e371540cf7b8e512544ba6871472031f3335"
 
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.account.get_erc_721_token_transfer_events_by_address(
         test_address, contractaddress=contract_address
     )
@@ -271,7 +270,7 @@ def block_keys():
 def test_get_blocks_validated_by_address(betamax_session, block_keys):
     test_address = "0xb79fad4ca981472442f53d16365fdf0305ffd8e9"
 
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.account.get_blocks_validated_by_address(test_address)
 
     assert isinstance(resp, APIResponse)

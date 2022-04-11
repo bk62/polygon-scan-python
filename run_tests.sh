@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-export SLOW_DOWN_API_TESTS=1
+export SLEEP_BETWEEN_TESTS=2
+# force record
+export BETAMAX_RECORD_MODE=all
 FILE=.env
 if [ -f "$FILE" ]; then
     echo "$FILE exists. Reading..."
@@ -9,4 +11,7 @@ else
     echo "$FILE does not exist."
 fi
 
-pytest "$@"
+poetry run pytest "$@"
+
+# reset
+export BETAMAX_RECORD_MODE=0

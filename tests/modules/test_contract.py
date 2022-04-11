@@ -2,8 +2,7 @@ import pytest
 from polygon_scan import PolygonScan
 from polygon_scan.datatypes import APIResponse, AttrDict
 
-# reliant on side effect of importing api key -- sleep bet/n tests fixture initialized in tests/__init__
-from tests import api_key
+from tests import APIKEY
 
 
 @pytest.fixture
@@ -17,7 +16,8 @@ def abi_keys():
 
 
 def test_get_contract_abi(betamax_session, test_contract_address):
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.contract.get_contract_abi(test_contract_address)
 
     assert isinstance(resp, APIResponse)
@@ -49,7 +49,7 @@ def source_keys():
 
 
 def test_get_contract_source(betamax_session, test_contract_address, source_keys):
-    pg_scan = PolygonScan(api_key, session=betamax_session)
+    pg_scan = PolygonScan(APIKEY, session=betamax_session)
     resp = pg_scan.contract.get_contract_source(test_contract_address)
 
     assert isinstance(resp, APIResponse)

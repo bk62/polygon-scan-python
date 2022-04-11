@@ -96,16 +96,21 @@ Install poetry as in [https://python-poetry.org/docs/](https://python-poetry.org
 ### Installation
 
 1. Clone the repo
+
 ```sh
 git clone https://github.com/bk62/polygon-scan-python.git
 ```
+
 2. Install required python packages with poetry
+
 ```sh
 cd polygon-scan-python
 poetry install
 ```
+
 3. (Optional) Get a free API Key at [https://polygonscan.com](https://polygonscan.com)
 4. (Optional) Enter your API KEY in an `.env` file
+
 ```sh
 echo "export POLYGON_SCAN_API_KEY=<YOUR_API_KEY>" > .env;
 ```
@@ -161,11 +166,17 @@ See the [open issues](https://github.com/bk62/polygon-scan-python/issues) for a 
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-This projet uses Betamax to mock requests by recording actual HTTP responses. The first time you add test an API call method:
+This project uses Betamax to mock requests by recording actual HTTP responses. The default record mode "once", raises exceptions when it encounters a new request. The first time you add a test for a new API call method:
 
 1. Export `POLYGON_SCAN_API_KEY` from a `.env` file (refer to `.env.example`)
-2. Run the `run_tests.sh` script which instructs Betamax to record response fixtures using the API key. The script also sets a 2 sec delay between requests to safely respect rate limits.
-3. Delete the relevant fixture file `tests/fixtures/cassettes/test.<test_module_name>.<test_name>` if necessary.
+2. Run the `run_tests.sh -k <your_test_name>` script which forces Betamax to re-record ALL selected response fixtures using the API key (by temporarily setting betamax record mode to "all").
+
+- The script sets a 2 sec delay between requests to safely respect rate limits.
+- Any arguments are passed to pytest
+
+Simply run `poetry pytest` to run all tests using existing fixtures.
+
+Delete the relevant fixture file `tests/fixtures/cassettes/test.<test_module_name>.<test_name>` and rerun `run_tests.sh` if necessary.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

@@ -2,7 +2,6 @@ import pytest
 from polygon_scan import PolygonScan
 from polygon_scan.const import ENDPOINT_URLS, RATE_LIMITS
 from polygon_scan.http_client.datatypes import RateLimit
-from tests import api_key
 
 
 def test_polygon_scan_no_api_tier_arg_sets_unauthenticated_api_tier():
