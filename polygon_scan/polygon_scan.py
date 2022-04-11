@@ -2,7 +2,7 @@
 import logging, os
 from .http_client import Client, RateLimit
 from .http_client.exceptions import InvalidRequest
-from .modules import Account, Contract, Transaction
+from .modules import Account, Contract, Transaction, Block
 from .exceptions import APIException, ClientException
 from .datatypes import AttrDict, APIResponse
 from .const import TIMEOUT, RATE_LIMITS, __version__, ENDPOINT_URLS
@@ -106,6 +106,7 @@ class PolygonScan:
         self.account = Account(self)
         self.contract = Contract(self)
         self.transaction = Transaction(self)
+        self.block = Block(self)
 
     @property
     def network(self):
